@@ -1,4 +1,4 @@
-#Mao and The Zedongs
+#Mao and The Zedongs (毛泽东)
 
 Dylan Hill
 
