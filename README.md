@@ -4,6 +4,6 @@ Dylan Hill
 
 Samuel Adams
 
-James didn't want to add his last name
+James McHugh
 
-Mike
+Mike Fly
