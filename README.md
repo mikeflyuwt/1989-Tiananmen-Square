@@ -1,9 +1,9 @@
 #Mao and The Zedongs (毛泽东)
 
-Dylan Hill
+Members:
+- Samuel Adams
+- Mike Fly
+- Dylan Hill
+- James McHugh
 
-Samuel Adams
-
-James McHugh
-
-Mike Fly
+Working on Jon's Gahraj since Oct 2019.
