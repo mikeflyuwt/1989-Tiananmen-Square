@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
 import java.awt.GridLayout;
+import java.io.IOException;
+import java.util.Properties;
 
 public class GUIAbout extends JDialog {
 
@@ -30,12 +32,14 @@ public class GUIAbout extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**
 	 * Create the dialog.
+	 * @throws IOException 
 	 */
-	public GUIAbout() {
+	public GUIAbout() throws IOException {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -47,8 +51,11 @@ public class GUIAbout extends JDialog {
 		JLabel lblDevelopedByDylan = new JLabel("Developed By Dylan Hill, Mike Fly, Samuel Adams, and James McHugh");
 		contentPanel.add(lblDevelopedByDylan);
 		
-		JLabel lblVersionNumber = new JLabel("Version Number: " + Version.getVersion());
+		Version v = new Version();
+		
+		JLabel lblVersionNumber = new JLabel("Version Number: " + v.getVersion());
 		contentPanel.add(lblVersionNumber);
+		
 		
 		
 		
