@@ -61,7 +61,6 @@ public class GUIMain {
 			}
 		});
 		menuBar.add(mntmAbout);
-		
 
 	}
 
