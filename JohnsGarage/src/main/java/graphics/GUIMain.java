@@ -8,6 +8,9 @@ import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import java.awt.BorderLayout;
+import javax.swing.JTree;
 
 public class GUIMain {
 
@@ -56,11 +59,13 @@ public class GUIMain {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					
 				}
 	    		aboutWind.setVisible(true);
 			}
 		});
 		menuBar.add(mntmAbout);
+
 
 	}
 
