@@ -10,4 +10,3 @@ TCSS 360 - Software Development & Quality Assurance
 
 ##### Working on Jon's Gahraj since Oct 2019.
 
-just checking
