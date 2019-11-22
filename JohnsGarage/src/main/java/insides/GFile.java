@@ -1,21 +1,27 @@
 package insides;
 
 import java.io.Serializable;
+import java.nio.file.Path;
 
-public class File implements Serializable{
+public class GFile implements Serializable{
 	private static final long serialVersionUID = -5646752043942919867L;
-	private String _path;
+	private Path _path;
 	private String _name;
 	
-	public File(String path, String name)
+	public GFile()
+	{
+		
+	}
+	
+	public GFile(Path path, String name)
 	{
 		_path = path;
 		_name = name;
 	}
 	
-	public String getPath()
+	public Path getPath()
 	{
-		return new String(_path);
+		return _path;
 	}
 	
 	public String getName()
