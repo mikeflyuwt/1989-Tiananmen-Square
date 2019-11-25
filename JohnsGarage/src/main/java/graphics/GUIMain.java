@@ -20,11 +20,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Toolkit;
+import javax.swing.JList;
 
 public class GUIMain {
 
@@ -65,12 +68,19 @@ public class GUIMain {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		// Project button panel
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 11, 156, 287);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
+//		// Project button panel
+//		JPanel panel = new JPanel();
+//		panel.setBackground(Color.WHITE);
+//		panel.setBounds(10, 11, 156, 287);
+//		frame.getContentPane().add(panel);
+//		panel.setLayout(null);
+		
+		JPanel sideList = new GUIProjectList();
+		frame.add(sideList);
+		sideList.setBounds(10,11,156,287);
+		sideList.setVisible(true);
+		frame.getContentPane().add(sideList);
+		sideList.setLayout(null);
 		
 		// Title panel
 		JPanel panel_1 = new JPanel();
@@ -95,8 +105,8 @@ public class GUIMain {
 				System.out.println("Projects!");
 			}
 		});
-		btnProjects.setBounds(10, 5, 136, 23);
-		panel.add(btnProjects);
+		//btnProjects.setBounds(10, 5, 136, 23);
+		//panel.add(btnProjects);
 		
 		// Add Tab button
 		JButton btnAddTab = new JButton("Add Tab");
@@ -152,6 +162,7 @@ public class GUIMain {
 		frame.getContentPane().add(btnImport);
 		
 		
+		
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -170,5 +181,7 @@ public class GUIMain {
 			}
 		});
 		menuBar.add(mntmAbout);
+		
+				
 	}
 }
