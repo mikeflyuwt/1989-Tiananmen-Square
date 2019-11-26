@@ -23,6 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+
+import insides.FileTree;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Font;
@@ -37,6 +40,9 @@ public class GUIMain {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		FileTree thisOne = new FileTree();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

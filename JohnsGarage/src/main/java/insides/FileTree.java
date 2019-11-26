@@ -23,6 +23,7 @@ public class FileTree {
 		{
 			if(!Files.exists(ROOTPATH)) //Fresh install
 			{
+				System.out.println("frst");
 				Files.createDirectory(ROOTPATH);
 				Files.createDirectories(PROJECTSPATH);
 			}
