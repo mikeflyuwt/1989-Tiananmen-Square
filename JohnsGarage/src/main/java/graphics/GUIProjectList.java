@@ -65,6 +65,6 @@ public class GUIProjectList extends JPanel {
 		for(i = 0; i < tum.size(); i++) {
 			model.addElement(tum.get(i));
 		}
-
+		
 	}
 }
