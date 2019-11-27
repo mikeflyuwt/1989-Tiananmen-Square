@@ -11,6 +11,11 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.FileAttribute;
 import java.util.List;
 
+/*
+ * Author: Sam
+ * Sam wrote all of these methods. Thanks Sam.
+ */
+
 public class FileTree {
 	
 	private static Folder<Tab> _root;
@@ -33,7 +38,9 @@ public class FileTree {
 		{
 			System.out.println(e.getMessage());
 		}
+		
 	}
+
 	
 	private void build()
 	{
