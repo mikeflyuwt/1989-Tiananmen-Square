@@ -13,7 +13,7 @@ import java.util.List;
 
 public class FileTree {
 	
-	private Folder<Tab> _root;
+	private static Folder<Tab> _root;
 	private static final Path ROOTPATH = Paths.get("/data");
 	private static final Path PROJECTSPATH = Paths.get("/data/Projects");
 	
@@ -27,19 +27,91 @@ public class FileTree {
 				Files.createDirectory(ROOTPATH);
 				Files.createDirectories(PROJECTSPATH);
 			}
+			build();
 		}
 		catch (IOException e)
 		{
 			System.out.println(e.getMessage());
 		}
-		
-		
 	}
 	
 	private void build()
 	{
 		_root = new Folder<Tab>(ROOTPATH, "root");
 		buildHelper(ROOTPATH, _root ,  0);
+	}
+	
+	public static Tab newTab(String name)
+	{
+		try
+		{
+			Path temppath = Paths.get(_root.getPath().toString() + name);
+			Files.createDirectory(temppath);
+			Tab ret = new Tab(temppath, name);
+			return ret;
+			
+		}
+		catch (IOException e)
+		{
+			System.out.println("Problem making new category: " + e.getMessage());
+		}
+		return null;
+	}
+	
+	public static Project newProject(String name, Tab parent)
+	{
+		try
+		{
+			Path temppath = Paths.get(parent.getPath().toString() + name);
+			Files.createDirectory(temppath);
+			Project ret = new Project(temppath, name);
+			return ret;
+			
+		}
+		catch (IOException e)
+		{
+			System.out.println("Problem making new category: " + e.getMessage());
+		}
+		return null;
+	}
+	
+	public static Category newCategory(String name, Project parent)
+	{
+		try
+		{
+			Path temppath = Paths.get(parent.getPath().toString() + name);
+			Files.createDirectory(temppath);
+			Category ret = new Category(temppath, name);
+			return ret;
+			
+		}
+		catch (IOException e)
+		{
+			System.out.println("Problem making new category: " + e.getMessage());
+		}
+		return null;
+	}
+	
+	public static Item newItem(String nameplusext, Path itempath, Category parent) //I'm unsure as to how this is going to be called, 
+	{
+		try
+		{
+			Path temppath = Paths.get(parent.getPath().toString() + nameplusext);
+			Files.copy(itempath, temppath);
+			Item ret = new Item(temppath, nameplusext);
+			return ret;
+			
+		}
+		catch (IOException e)
+		{
+			System.out.println("Problem making new Item: " + e.getMessage());
+		}
+		return null;
+	}
+	
+	public static Folder<Tab> getRoot()
+	{
+		return _root;
 	}
 	
 	private void buildHelper(Path curPath, Folder parent, int layer)
@@ -63,7 +135,7 @@ public class FileTree {
 		{
 			for(File f : files)
 			{
-				temp = new Item(f.toPath(), f.getName());
+				temp = new Item(f.toPath(), f.getName()); //this is sep
 				parent.add(temp);
 			}
 		}
