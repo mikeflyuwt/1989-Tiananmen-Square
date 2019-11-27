@@ -33,7 +33,6 @@ public class FileTree {
 			System.out.println(e.getMessage());
 		}
 		
-		
 	}
 	
 	private void build()
