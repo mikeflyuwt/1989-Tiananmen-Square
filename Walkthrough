@@ -1,0 +1,6 @@
+We'll be presenting at src/main/insides/FileTree, and the rest of this document will be explaining FileTree's relationship to the rest of the project.
+
+This code enables the saving and writing of files to the drive, in addition to building the UI and the relationship between UI objects.
+In particular this code allows the user to make a project, add items to projects, Saving projects, and adding and removing tabs.
+As of now, there are not test files for the FileTree class.
+As for build automation, it's still a work in progess. We are automatically building a jar file upon saving our code. We are looking into why it won't run.
