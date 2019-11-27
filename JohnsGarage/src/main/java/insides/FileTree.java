@@ -30,8 +30,6 @@ public class FileTree {
 		{
 			System.out.println(e.getMessage());
 		}
-		
-		
 	}
 	
 	private void build()
@@ -61,7 +59,7 @@ public class FileTree {
 		{
 			for(File f : files)
 			{
-				temp = new Item(f.toPath(), f.getName());
+				temp = new Item(f.toPath(), f.getName()); //this is sep
 				parent.add(temp);
 			}
 		}
