@@ -41,6 +41,27 @@ public class FileTree {
 		buildHelper(ROOTPATH, _root ,  0);
 	}
 	
+	public static void delete(GFile file)
+	{
+		try
+		{
+			if(!file.getClass().getSimpleName().equals("Item"))
+			{
+				Folder fold = (Folder) file;
+				for(GFile f : (List<GFile>) fold.getContents())
+				{
+					delete(f);
+				}
+			}
+			Files.delete(file.getPath());
+		}
+		catch (IOException e)
+		{
+			System.out.println("Problem deleting files: " + e.getMessage());
+		}
+
+	}
+	
 	public static Tab newTab(String name)
 	{
 		try
