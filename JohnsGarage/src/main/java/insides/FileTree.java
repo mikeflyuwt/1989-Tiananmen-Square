@@ -28,7 +28,6 @@ public class FileTree {
 		{
 			if(!Files.exists(ROOTPATH)) //Fresh install
 			{
-				System.out.println("frst");
 				Files.createDirectory(ROOTPATH);
 				Files.createDirectories(PROJECTSPATH);
 			}
@@ -47,14 +46,19 @@ public class FileTree {
 		_root = new Folder<Tab>(ROOTPATH, "root");
 		buildHelper(ROOTPATH, _root ,  0);
 	}
-	
+	/*
+	 * Jim added the "\\" for all the paths so it would work
+	 */
 	public static Tab newTab(String name)
 	{
 		try
 		{
-			Path temppath = Paths.get(_root.getPath().toString() + name);
+			Path temppath = Paths.get(_root.getPath().toString() + "\\" + name);
+			System.out.println(temppath.toString());
 			Files.createDirectory(temppath);
+			System.out.println("1");
 			Tab ret = new Tab(temppath, name);
+			System.out.println("1");
 			return ret;
 			
 		}
@@ -69,7 +73,7 @@ public class FileTree {
 	{
 		try
 		{
-			Path temppath = Paths.get(parent.getPath().toString() + name);
+			Path temppath = Paths.get(parent.getPath().toString() + "\\" + name);
 			Files.createDirectory(temppath);
 			Project ret = new Project(temppath, name);
 			return ret;
@@ -86,7 +90,7 @@ public class FileTree {
 	{
 		try
 		{
-			Path temppath = Paths.get(parent.getPath().toString() + name);
+			Path temppath = Paths.get(parent.getPath().toString() + "\\" + name);
 			Files.createDirectory(temppath);
 			Category ret = new Category(temppath, name);
 			return ret;
@@ -103,7 +107,7 @@ public class FileTree {
 	{
 		try
 		{
-			Path temppath = Paths.get(parent.getPath().toString() + nameplusext);
+			Path temppath = Paths.get(parent.getPath().toString() + "\\" + nameplusext);
 			Files.copy(itempath, temppath);
 			Item ret = new Item(temppath, nameplusext);
 			return ret;
