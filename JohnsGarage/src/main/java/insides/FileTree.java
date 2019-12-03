@@ -150,13 +150,15 @@ public class FileTree {
 					case 2: temp = new Category(f.toPath(), f.getName());
 				}
 				parent.add(temp);
+				buildHelper(temp.getPath(), (Folder) temp,  layer + 1);
 			}
 		}
 		else
 		{
 			for(File f : files)
 			{
-				temp = new Item(f.toPath(), f.getName()); //this is sep
+				//tag feature goes here
+				temp = new Item(f.toPath(), f.getName());
 				parent.add(temp);
 			}
 		}
