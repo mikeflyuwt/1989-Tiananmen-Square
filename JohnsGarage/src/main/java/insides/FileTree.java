@@ -13,9 +13,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import java.util.Map;
 
@@ -130,6 +134,53 @@ public class FileTree {
 			System.out.println("Problem deleting files: " + e.getMessage());
 		}
 
+	}
+	
+	/**
+	 * Recursively exports the contents of a GFile or folder to a specified destination.
+	 * Last Edited: 12/4/2019
+	 * @author Sam
+	 * @param src
+	 * @param dest
+	 */
+	public void export(final GFile src, final Path dest)
+	{
+		try
+		{
+			final Path source = src.getPath();
+			Files.walkFileTree(source, new FileVisitor<Path>() {
+
+				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+					Path newpath = dest.resolve(source.relativize(dir));
+					try
+					{
+						Files.copy(dir, newpath);
+					}
+					catch(FileAlreadyExistsException e)
+					{
+						
+					}
+					return FileVisitResult.CONTINUE;
+				}
+
+				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+					Files.copy(source, dest.resolve(source.relativize(file)));
+					return FileVisitResult.CONTINUE;
+				}
+
+				public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+					return FileVisitResult.CONTINUE;
+				}
+
+				public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+					return FileVisitResult.CONTINUE;
+				}
+			});
+		}
+		catch(IOException e)
+		{
+			System.out.println("Problem Exporting files: " + e.getMessage());
+		}
 	}
 	
 	/**
