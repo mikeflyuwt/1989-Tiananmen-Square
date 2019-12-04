@@ -25,6 +25,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import insides.FileTree;
+import insides.Tab;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -35,14 +36,23 @@ import javax.swing.JList;
 public class GUIMain {
 
 	private JFrame frame;
+	
+	public static FileTree theFileTree;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		
-		FileTree thisOne = new FileTree();
 		
+		//testing stuff don't worry about it
+		theFileTree = new FileTree();
+		//Tab timmy = new Tab(theFileTree.getRoot().getPath(), "timmy");
+		//theFileTree.newTab("timmy");
+		//Tab tommy = theFileTree.newTab("tommy");
+		//theFileTree.newProject("dome", tommy);
+		
+				
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -73,15 +83,10 @@ public class GUIMain {
 		frame.setBounds(100, 100, 600, 405);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+
 		
-//		// Project button panel
-//		JPanel panel = new JPanel();
-//		panel.setBackground(Color.WHITE);
-//		panel.setBounds(10, 11, 156, 287);
-//		frame.getContentPane().add(panel);
-//		panel.setLayout(null);
-		
-		JPanel sideList = new GUIProjectList();
+		GUITabList sideList = new GUITabList();
+		sideList.loadTabs(theFileTree);
 		frame.add(sideList);
 		sideList.setBounds(10,11,156,287);
 		sideList.setVisible(true);
