@@ -49,6 +49,29 @@ public class FileTree {
 	/*
 	 * Jim added the "\\" for all the paths so it would work
 	 */
+
+	
+	public static void delete(GFile file)
+	{
+		try
+		{
+			if(!file.getClass().getSimpleName().equals("Item"))
+			{
+				Folder fold = (Folder) file;
+				for(GFile f : (List<GFile>) fold.getContents())
+				{
+					delete(f);
+				}
+			}
+			Files.delete(file.getPath());
+		}
+		catch (IOException e)
+		{
+			System.out.println("Problem deleting files: " + e.getMessage());
+		}
+
+	}
+	
 	public static Tab newTab(String name)
 	{
 		try
@@ -140,13 +163,15 @@ public class FileTree {
 					case 2: temp = new Category(f.toPath(), f.getName());
 				}
 				parent.add(temp);
+				buildHelper(temp.getPath(), (Folder) temp,  layer + 1);
 			}
 		}
 		else
 		{
 			for(File f : files)
 			{
-				temp = new Item(f.toPath(), f.getName()); //this is sep
+				//tag feature goes here
+				temp = new Item(f.toPath(), f.getName());
 				parent.add(temp);
 			}
 		}
