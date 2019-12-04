@@ -27,7 +27,8 @@ import java.util.Map;
 public class FileTree {
 	
 	private Folder<Tab> _root;
-	private static final Path ROOTPATH = Paths.get(System.getProperty("user.dir"), "//data");
+	private static final Path DEFAULTPATH = Paths.get(System.getProperty("user.dir"));
+	private static final Path ROOTPATH = Paths.get(DEFAULTPATH.toString(), "//data");
 	private static final Path PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
 	private static final Path CONFIGPATH = Paths.get(ROOTPATH.toString(), "//config.info");
 	
@@ -66,14 +67,12 @@ public class FileTree {
 		}
 		catch (IOException e)
 		{
-			
 			System.out.println("Building tree failed:" + e.getMessage());
 		}
 		catch (ClassNotFoundException e)
 		{
 			System.out.println("Deserializing config failed:" + e.getMessage());
 		}
-		
 	}
 	
 	/**
@@ -110,6 +109,7 @@ public class FileTree {
 	}
 	/*
 	 * Jim added the "\\" for all the paths so it would work
+	 * Very nice thank you -Sam
 	 */
 
 	/**
@@ -138,7 +138,6 @@ public class FileTree {
 		{
 			System.out.println("Problem deleting files: " + e.getMessage());
 		}
-
 	}
 	
 	/**
@@ -153,7 +152,7 @@ public class FileTree {
 		try
 		{
 			final Path source = src.getPath();
-			Files.walkFileTree(source, new FileVisitor<Path>() {
+			Files.walkFileTree(source, new FileVisitor<Path>() { //anonymous class that is used only in walkfiletree
 
 				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
 					Path newpath = dest.resolve(source.relativize(dir));
@@ -163,7 +162,7 @@ public class FileTree {
 					}
 					catch(FileAlreadyExistsException e)
 					{
-						
+						//If the file already exists, just continue on.
 					}
 					return FileVisitResult.CONTINUE;
 				}
@@ -190,7 +189,7 @@ public class FileTree {
 	
 	/**
 	 * Returns a Map of Property Names to Values for a given GFile.
-	 * You can change them yourself, or call changeProperty for added safety.
+	 * To change, call changeProperty.
 	 * Last Edited: 12/4/2019
 	 * @param item
 	 * @author Sam
@@ -365,12 +364,9 @@ public class FileTree {
 		{
 			for(File f : files)
 			{
-				//tag feature goes here
 				temp = new Item(f.toPath(), f.getName());
 				parent.add(temp);
 			}
 		}
 	}
-	
-	
 }
