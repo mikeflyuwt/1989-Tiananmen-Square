@@ -17,5 +17,7 @@ public class GUICenterPanelProjectList extends JPanel {
 	public GUICenterPanelProjectList() {
 
 	}
+	
+	
 
 }
