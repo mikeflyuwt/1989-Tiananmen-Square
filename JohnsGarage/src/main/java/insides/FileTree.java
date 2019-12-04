@@ -87,7 +87,7 @@ public class FileTree {
 		}
 		catch (IOException e)
 		{
-			System.out.println("Problem making new category: " + e.getMessage());
+			System.out.println("Problem making new Tab: " + e.getMessage());
 		}
 		return null;
 	}
@@ -104,7 +104,7 @@ public class FileTree {
 		}
 		catch (IOException e)
 		{
-			System.out.println("Problem making new category: " + e.getMessage());
+			System.out.println("Problem making new Project: " + e.getMessage());
 		}
 		return null;
 	}
@@ -146,6 +146,11 @@ public class FileTree {
 	public static Folder<Tab> getRoot()
 	{
 		return _root;
+	}
+	
+	public List<Tab> getTabs()
+	{
+		return _root.getContents();
 	}
 	
 	private void buildHelper(Path curPath, Folder parent, int layer)
