@@ -19,8 +19,6 @@
         <artifactId>heroku-maven-plugin</artifactId>
         <version>2.0.13</version>
       </plugin>
-    </plugins>
-  	</resources>
-  	
+    </plugins>  	
   </build>
 </project>
