@@ -58,8 +58,8 @@ public class GUITabList extends JPanel {
 
 		System.out.println("loadTabs");
 		
-		ArrayList<Tab> joey = (ArrayList<Tab>) theFileTree.getRoot().getContents();
-		ArrayList<Tab> tum = new ArrayList();
+		List<Tab> joey = theFileTree.getTabs();
+		//ArrayList<Tab> tum = new ArrayList();
 		//tum.add(joey.get(0).toString());
 		//tum.add();
 		

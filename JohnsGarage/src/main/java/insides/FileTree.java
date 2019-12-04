@@ -18,9 +18,9 @@ import java.util.List;
 
 public class FileTree {
 	
-	private static Folder<Tab> _root;
-	private static final Path ROOTPATH = Paths.get("/data");
-	private static final Path PROJECTSPATH = Paths.get("/data/Projects");
+	private Folder<Tab> _root;
+	private static final Path ROOTPATH = Paths.get(System.getProperty("user.dir"), "//data");
+	private static final Path PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
 	
 	public FileTree()
 	{
@@ -35,7 +35,8 @@ public class FileTree {
 		}
 		catch (IOException e)
 		{
-			System.out.println(e.getMessage());
+			
+			System.out.println("Building tree failed:" + e.getMessage());
 		}
 		
 	}
