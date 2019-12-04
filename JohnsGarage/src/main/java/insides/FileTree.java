@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +48,11 @@ public class FileTree {
 				Files.createDirectory(ROOTPATH);
 				Files.createDirectories(PROJECTSPATH);
 			}
-			if(!Files.exists(CONFIGPATH)) Files.createFile(CONFIGPATH);
+			if(!Files.exists(CONFIGPATH))
+				{
+					Files.createFile(CONFIGPATH);
+					_itemProperties = new HashMap<GFile, Map<String, String>>();
+				}
 			else if(CONFIGPATH.toFile().length() != 0L)
 			{
 				File config = CONFIGPATH.toFile();
@@ -206,6 +211,7 @@ public class FileTree {
 	 */
 	public void changeProperty(GFile target, String property, String value)
 	{
+		if(!_itemProperties.containsKey(target)) _itemProperties.put(target, new HashMap<String, String>());
 		_itemProperties.get(target).put(property, value);
 	}
 	
