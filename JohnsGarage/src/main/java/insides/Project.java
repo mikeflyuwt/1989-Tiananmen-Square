@@ -1,5 +1,6 @@
 /**
- * A representation of a Project, used by the GUI to construct UI components.]
+ * A representation of a Project, used by the GUI to construct UI components.
+ * Last Edited: 12/4/2019
  * @author Sam
  */
 package insides;
@@ -11,6 +12,7 @@ public class Project extends Folder<Category>{
 	
 	/**
 	 * Initializes the Project.
+	 * Last Edited: 12/4/2019
 	 * @param path
 	 * @param name
 	 */

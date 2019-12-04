@@ -1,5 +1,6 @@
 /**
  * The lowest level of representation. Contained by categories, Items are representative of actual files within the FileSystem.
+ * Last Edited: 12/4/2019
  * @author Sam
  */
 package insides;
@@ -12,6 +13,7 @@ public class Item extends GFile
 
 	/**
 	 * Builds the Item. Make sure the extension is included within the path when called.
+	 * Last Edited: 12/4/2019
 	 * @param path
 	 * @param name
 	 */
