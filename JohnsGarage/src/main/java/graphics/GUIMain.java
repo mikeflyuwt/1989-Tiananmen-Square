@@ -1,193 +1,188 @@
 package graphics;
 
-import static org.junit.Assert.assertEquals;
-
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;  
-import javax.swing.JMenuBar;  
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-
 import insides.FileTree;
 
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.Font;
-import java.awt.Toolkit;
-import javax.swing.JList;
-
-public class GUIMain {
-
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		
-		FileTree thisOne = new FileTree();
-		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIMain window = new GUIMain();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public GUIMain() {
+public class GUIMain
+{
+	private JFrame mainFrame;
+	
+	private GridBagConstraints constraints;
+	
+	private static FileTree theFileTree;
+	
+	private GUIMain()
+	{
 		initialize();
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setFont(new Font("Dialog", Font.BOLD, 12));
-		frame.setTitle("Jon's Gahraj");
-		frame.setBounds(100, 100, 600, 405);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+	
+	public static void main(String[] args)
+	{
+		theFileTree = new FileTree();
 		
-//		// Project button panel
-//		JPanel panel = new JPanel();
-//		panel.setBackground(Color.WHITE);
-//		panel.setBounds(10, 11, 156, 287);
-//		frame.getContentPane().add(panel);
-//		panel.setLayout(null);
-		
-		JPanel sideList = new GUIProjectList();
-		frame.add(sideList);
-		sideList.setBounds(10,11,156,287);
-		sideList.setVisible(true);
-		frame.getContentPane().add(sideList);
-		sideList.setLayout(null);
-		
-		// Title panel
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(176, 11, 390, 287);
-		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(null);
-		
-		// Title label
-		JLabel lblNewLabel_1 = new JLabel("Jon's Gahraj");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 40));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(10, 11, 370, 44);
-		panel_1.add(lblNewLabel_1);
-		
-		// Projects button
-		JButton btnProjects = new JButton("Projects");
-		btnProjects.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnProjects.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Fill in
-				System.out.println("Projects!");
-			}
-		});
-		//btnProjects.setBounds(10, 5, 136, 23);
-		//panel.add(btnProjects);
-		
-		// Add Tab button
-		JButton btnAddTab = new JButton("Add Tab");
-		btnAddTab.setText("<html><center>"+"Add"+"<br>"+"Tab"+"</center></html>");
-		btnAddTab.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Fill in
-				System.out.println("Tab added!");
-			}
-		});
-		btnAddTab.setBounds(10, 301, 79, 34);
-		frame.getContentPane().add(btnAddTab);
-		
-		// Remove Tab button
-		JButton btnRemoveTab = new JButton("Remove Tab");
-		btnRemoveTab.setText("<html><center>"+"Remove"+"<br>"+"Tab"+"</center></html>");
-		btnRemoveTab.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Fill in
-				System.out.println("Tab removed!");
-			}
-		});
-		btnRemoveTab.setBounds(87, 301, 79, 34);
-		frame.getContentPane().add(btnRemoveTab);
-		
-		// Export button
-		JButton btnExport = new JButton("Export");
-		btnExport.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Fill in
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.showSaveDialog(null);
-				
-				System.out.println("Export");
-			}
-		});
-		btnExport.setBounds(487, 301, 79, 34);
-		frame.getContentPane().add(btnExport);
-		
-		// Import button
-		JButton btnImport = new JButton("Import");
-		btnImport.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Fill in
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.showOpenDialog(null);
-				
-				System.out.println("Import");
-			}
-		});
-
-		btnImport.setBounds(410, 301, 79, 34);
-		frame.getContentPane().add(btnImport);
-		
-		
-		
-		// Menu bar
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-		
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mntmAbout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				GUIAbout aboutWind = null;
-				try {
-					aboutWind = new GUIAbout();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				try
+				{
+					GUIMain window = new GUIMain();
+					window.mainFrame.setVisible(true);
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace();
 				}
-	    		aboutWind.setVisible(true);
 			}
 		});
-		menuBar.add(mntmAbout);
+	}
+	
+	private void initialize()
+	{
+		mainFrame = new JFrame("Jon's Gahraj");
+		mainFrame.setBounds(50, 50, 850, 650);
+		mainFrame.setMinimumSize(new Dimension(640, 480));
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.getContentPane().setLayout(new GridBagLayout());
 		
-				
+		constraints = new GridBagConstraints();
+		createMenu();
+		createTabPane();
+		createHomePane();
+		createTabButtons();
+		createImportExport();
+	}
+	
+	private void createMenu()
+	{
+		JMenuBar menu = new JMenuBar();
+		mainFrame.setJMenuBar(menu);
+		
+		JMenuItem about = new JMenuItem("About");
+		about.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				GUIAbout aboutWindow = null;
+				try
+				{
+					aboutWindow = new GUIAbout();
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+				aboutWindow.setVisible(true);
+			}
+		});
+		menu.add(about);
+	}
+	
+	private void createTabPane()
+	{
+		GUITabPane tabs = new GUITabPane(theFileTree);
+		setConstraints(0, 0, 2, 1, 0.25, 0.95);
+		mainFrame.add(tabs, constraints);
+		tabs.setVisible(true);
+	}
+	
+	private void createHomePane()
+	{
+		JPanel home = new JPanel();
+		home.setLayout(new GridBagLayout());
+		home.setBackground(Color.WHITE);
+		setConstraints(2, 0, 5, 1, 0.75, 0.95);
+		mainFrame.add(home, constraints);
+		
+		JLabel title = new JLabel("Jon's Gahraj");
+		title.setFont(new Font("Tahoma", Font.BOLD, 48));
+		home.add(title);
+	}
+	
+	private void createTabButtons()
+	{
+		JButton addTab = new JButton("Add Tab");
+		setConstraints(0, 1, 1, 1, 0.125, 0.05);
+		addTab.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				System.out.println("Tab added...");
+			}
+		});
+		mainFrame.add(addTab, constraints);
+		
+		JButton removeTab = new JButton("Remove Tab");
+		setConstraints(1, 1, 1, 1, 0.125, 0.05);
+		removeTab.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				System.out.println("Tab removed...");
+			}
+		});
+		mainFrame.add(removeTab, constraints);
+	}
+	
+	private void createImportExport()
+	{
+		JPanel emptyspace = new JPanel();
+		setConstraints(2, 1, 3, 1, 0.5, 0.05);
+		mainFrame.add(emptyspace, constraints);
+		
+		JButton importBtn = new JButton("Import");
+		setConstraints(5, 1, 1, 1, 0.125, 0.05);
+		importBtn.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.showOpenDialog(null);
+				System.out.println("Imported...");
+			}
+		});
+		mainFrame.add(importBtn, constraints);
+		
+		JButton exportBtn = new JButton("Export");
+		setConstraints(6, 1, 1, 1, 0.125, 0.05);
+		exportBtn.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.showSaveDialog(null);
+				System.out.println("Exported...");
+			}
+		});
+		mainFrame.add(exportBtn, constraints);
+	}
+	
+	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
+	{
+		constraints.gridx = x;
+		constraints.gridy = y;
+		constraints.gridwidth = w;
+		constraints.gridheight = h;
+		constraints.weightx = wx;
+		constraints.weighty = wy;
+		constraints.insets = new Insets(5, 5, 5, 5);
+		constraints.fill = GridBagConstraints.BOTH;
 	}
 }

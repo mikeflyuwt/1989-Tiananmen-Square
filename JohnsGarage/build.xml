@@ -3,5 +3,6 @@
 <project name="TestMain" default="CreateJar">
   <target name="CreateJar" description="Create Jar file">
 	<jar jarfile="JohnsGarage.jar" basedir="." includes="**/*.class" />     
+        <jar jarfile="Test.jar" basedir="." includes="/.class" />
   </target>
 </project>

@@ -18,9 +18,9 @@ import java.util.List;
 
 public class FileTree {
 	
-	private static Folder<Tab> _root;
-	private static final Path ROOTPATH = Paths.get("/data");
-	private static final Path PROJECTSPATH = Paths.get("/data/Projects");
+	private Folder<Tab> _root;
+	private static final Path ROOTPATH = Paths.get(System.getProperty("user.dir"), "//data");
+	private static final Path PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
 	
 	public FileTree()
 	{
@@ -28,7 +28,6 @@ public class FileTree {
 		{
 			if(!Files.exists(ROOTPATH)) //Fresh install
 			{
-				System.out.println("frst");
 				Files.createDirectory(ROOTPATH);
 				Files.createDirectories(PROJECTSPATH);
 			}
@@ -36,7 +35,8 @@ public class FileTree {
 		}
 		catch (IOException e)
 		{
-			System.out.println(e.getMessage());
+			
+			System.out.println("Building tree failed:" + e.getMessage());
 		}
 		
 	}
@@ -47,8 +47,12 @@ public class FileTree {
 		_root = new Folder<Tab>(ROOTPATH, "root");
 		buildHelper(ROOTPATH, _root ,  0);
 	}
+	/*
+	 * Jim added the "\\" for all the paths so it would work
+	 */
+
 	
-	public static void delete(GFile file)
+	public void delete(GFile file)
 	{
 		try
 		{
@@ -69,28 +73,31 @@ public class FileTree {
 
 	}
 	
-	public static Tab newTab(String name)
+	public Tab newTab(String name)
 	{
 		try
 		{
-			Path temppath = Paths.get(_root.getPath().toString() + name);
+			Path temppath = Paths.get(_root.getPath().toString() + "\\" + name);
+			System.out.println(temppath.toString());
 			Files.createDirectory(temppath);
+			System.out.println("1");
 			Tab ret = new Tab(temppath, name);
+			System.out.println("1");
 			return ret;
 			
 		}
 		catch (IOException e)
 		{
-			System.out.println("Problem making new category: " + e.getMessage());
+			System.out.println("Problem making new Tab: " + e.getMessage());
 		}
 		return null;
 	}
 	
-	public static Project newProject(String name, Tab parent)
+	public Project newProject(String name, Tab parent)
 	{
 		try
 		{
-			Path temppath = Paths.get(parent.getPath().toString() + name);
+			Path temppath = Paths.get(parent.getPath().toString() + "\\" + name);
 			Files.createDirectory(temppath);
 			Project ret = new Project(temppath, name);
 			return ret;
@@ -98,16 +105,16 @@ public class FileTree {
 		}
 		catch (IOException e)
 		{
-			System.out.println("Problem making new category: " + e.getMessage());
+			System.out.println("Problem making new Project: " + e.getMessage());
 		}
 		return null;
 	}
 	
-	public static Category newCategory(String name, Project parent)
+	public Category newCategory(String name, Project parent)
 	{
 		try
 		{
-			Path temppath = Paths.get(parent.getPath().toString() + name);
+			Path temppath = Paths.get(parent.getPath().toString() + "\\" + name);
 			Files.createDirectory(temppath);
 			Category ret = new Category(temppath, name);
 			return ret;
@@ -120,11 +127,11 @@ public class FileTree {
 		return null;
 	}
 	
-	public static Item newItem(String nameplusext, Path itempath, Category parent) //I'm unsure as to how this is going to be called, 
+	public Item newItem(String nameplusext, Path itempath, Category parent) //I'm unsure as to how this is going to be called, 
 	{
 		try
 		{
-			Path temppath = Paths.get(parent.getPath().toString() + nameplusext);
+			Path temppath = Paths.get(parent.getPath().toString() + "\\" + nameplusext);
 			Files.copy(itempath, temppath);
 			Item ret = new Item(temppath, nameplusext);
 			return ret;
@@ -137,9 +144,9 @@ public class FileTree {
 		return null;
 	}
 	
-	public static Folder<Tab> getRoot()
+	public List<Tab> getTabs()
 	{
-		return _root;
+		return _root.getContents();
 	}
 	
 	private void buildHelper(Path curPath, Folder parent, int layer)
@@ -152,18 +159,26 @@ public class FileTree {
 			{
 				switch (layer)
 				{
-					case 0: temp = new Tab(f.toPath(), f.getName());
-					case 1: temp = new Project(f.toPath(), f.getName());
-					case 2: temp = new Category(f.toPath(), f.getName());
+					case 0: 
+						temp = new Tab(f.toPath(), f.getName());
+						break;
+					case 1:
+						temp = new Project(f.toPath(), f.getName());
+						break;
+					case 2: 
+						temp = new Category(f.toPath(), f.getName());
+						break;
 				}
 				parent.add(temp);
+				buildHelper(temp.getPath(), (Folder) temp,  layer + 1);
 			}
 		}
 		else
 		{
 			for(File f : files)
 			{
-				temp = new Item(f.toPath(), f.getName()); //this is sep
+				//tag feature goes here
+				temp = new Item(f.toPath(), f.getName());
 				parent.add(temp);
 			}
 		}

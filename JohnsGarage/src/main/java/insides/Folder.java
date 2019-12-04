@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Folder<T extends GFile> extends GFile{
-	private static final long serialVersionUID = -781660998510515160L;
 	private ArrayList<T> _contents;
 	
 	public Folder(Path path, String name)
@@ -17,13 +16,13 @@ public class Folder<T extends GFile> extends GFile{
 	
 	public List<T> getContents()
 	{
-		return (List<T>) _contents.clone();
+		return _contents;
 	}
 	
 	public void add(T newContent)
 	{
 		_contents.add(newContent);
 	}
-
+	
 
 }
