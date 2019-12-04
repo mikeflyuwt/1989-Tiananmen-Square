@@ -13,6 +13,7 @@ import java.awt.Color;
 //import java.awt.List;
 import java.awt.Scrollbar;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -26,7 +27,7 @@ import java.awt.Font;
 
 public class GUITabList extends JPanel {
 	
-	DefaultListModel model;
+	private DefaultListModel<Tab> model;
 	
 	public GUITabList() {
 		setLayout(null);
@@ -55,18 +56,22 @@ public class GUITabList extends JPanel {
 	
 	public void loadTabs(FileTree theFileTree) {
 
-		List<Tab> joey = theFileTree.getRoot().getContents();
-		ArrayList tum = new ArrayList();
-
-		for(int i = 0; i < joey.size(); i++) {
-			
-			tum.add(joey.get(i));
-		}
+		System.out.println("loadTabs");
 		
+		ArrayList<Tab> joey = (ArrayList<Tab>) theFileTree.getRoot().getContents();
+		ArrayList<Tab> tum = new ArrayList();
+		//tum.add(joey.get(0).toString());
+		//tum.add();
+		
+		//BULLET FAIRLY RIPPED
 		
 		int i;
-		for(i = 0; i < tum.size(); i++) {
-			model.addElement(tum.get(i));
+		for(i = 0; i < joey.size(); i++) {
+			//model.addElement(joey.get(i));
+			//model.addElement(joey.get(i).toString());
+			//model.set(i, joey.get(i));					//guys this is still broken idk how to fix it :(o
+			//tfw big iron on my hip
+			System.out.println(joey.get(i));
 		}
 		
 	}

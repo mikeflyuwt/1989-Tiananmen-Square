@@ -24,6 +24,6 @@ public class Folder<T extends GFile> extends GFile{
 	{
 		_contents.add(newContent);
 	}
-
+	
 
 }

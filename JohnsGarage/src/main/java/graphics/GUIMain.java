@@ -47,6 +47,8 @@ public class GUIMain {
 		
 		//testing stuff don't worry about it
 		theFileTree = new FileTree();
+		//Tab timmy = new Tab(theFileTree.getRoot().getPath(), "timmy");
+		//theFileTree.newTab("timmy");
 		//Tab tommy = theFileTree.newTab("tommy");
 		//theFileTree.newProject("dome", tommy);
 		
