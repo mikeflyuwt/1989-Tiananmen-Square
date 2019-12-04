@@ -1,6 +1,7 @@
 package graphics;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -17,8 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-
 import insides.FileTree;
 
 public class GUIMain
@@ -59,6 +58,7 @@ public class GUIMain
 	{
 		mainFrame = new JFrame("Jon's Gahraj");
 		mainFrame.setBounds(50, 50, 850, 650);
+		mainFrame.setMinimumSize(new Dimension(640, 480));
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.getContentPane().setLayout(new GridBagLayout());
 		
