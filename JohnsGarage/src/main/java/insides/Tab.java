@@ -1,6 +1,7 @@
 /**
  * The Tab is the highest level of folder within the FileSystem representation. Tabs are folders of projects.
  * @author Sam
+ * Last Edited: 12/4/2019
  */
 package insides;
 
@@ -12,6 +13,7 @@ public class Tab extends Folder<Project>
 
 	/**
 	 * Initializes the Tab. 
+	 * Last Edited: 12/4/2019
 	 * @author Sam
 	 * @param path
 	 * @param name
