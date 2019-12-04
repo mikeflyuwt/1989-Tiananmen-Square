@@ -13,16 +13,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class FileTree {
 	
 	private Folder<Tab> _root;
-	private static final Path ROOTPATH = Paths.get(System.getProperty("user.dir"), "//data");
+	private static final Path DEFAULTPATH = Paths.get(System.getProperty("user.dir"));
+	private static final Path ROOTPATH = Paths.get(DEFAULTPATH.toString(), "//data");
 	private static final Path PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
 	private static final Path CONFIGPATH = Paths.get(ROOTPATH.toString(), "//config.info");
 	
@@ -43,7 +49,11 @@ public class FileTree {
 				Files.createDirectory(ROOTPATH);
 				Files.createDirectories(PROJECTSPATH);
 			}
-			if(!Files.exists(CONFIGPATH)) Files.createFile(CONFIGPATH);
+			if(!Files.exists(CONFIGPATH))
+				{
+					Files.createFile(CONFIGPATH);
+					_itemProperties = new HashMap<GFile, Map<String, String>>();
+				}
 			else if(CONFIGPATH.toFile().length() != 0L)
 			{
 				File config = CONFIGPATH.toFile();
@@ -57,14 +67,12 @@ public class FileTree {
 		}
 		catch (IOException e)
 		{
-			
 			System.out.println("Building tree failed:" + e.getMessage());
 		}
 		catch (ClassNotFoundException e)
 		{
 			System.out.println("Deserializing config failed:" + e.getMessage());
 		}
-		
 	}
 	
 	/**
@@ -101,6 +109,7 @@ public class FileTree {
 	}
 	/*
 	 * Jim added the "\\" for all the paths so it would work
+	 * Very nice thank you -Sam
 	 */
 
 	/**
@@ -129,12 +138,58 @@ public class FileTree {
 		{
 			System.out.println("Problem deleting files: " + e.getMessage());
 		}
+	}
+	
+	/**
+	 * Recursively exports the contents of a GFile or folder to a specified destination.
+	 * Last Edited: 12/4/2019
+	 * @author Sam
+	 * @param src
+	 * @param dest
+	 */
+	public void export(final GFile src, final Path dest)
+	{
+		try
+		{
+			final Path source = src.getPath();
+			Files.walkFileTree(source, new FileVisitor<Path>() { //anonymous class that is used only in walkfiletree
 
+				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+					Path newpath = dest.resolve(source.relativize(dir));
+					try
+					{
+						Files.copy(dir, newpath);
+					}
+					catch(FileAlreadyExistsException e)
+					{
+						//If the file already exists, just continue on.
+					}
+					return FileVisitResult.CONTINUE;
+				}
+
+				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+					Files.copy(source, dest.resolve(source.relativize(file)));
+					return FileVisitResult.CONTINUE;
+				}
+
+				public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+					return FileVisitResult.CONTINUE;
+				}
+
+				public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+					return FileVisitResult.CONTINUE;
+				}
+			});
+		}
+		catch(IOException e)
+		{
+			System.out.println("Problem Exporting files: " + e.getMessage());
+		}
 	}
 	
 	/**
 	 * Returns a Map of Property Names to Values for a given GFile.
-	 * You can change them yourself, or call changeProperty for added safety.
+	 * To change, call changeProperty.
 	 * Last Edited: 12/4/2019
 	 * @param item
 	 * @author Sam
@@ -155,6 +210,7 @@ public class FileTree {
 	 */
 	public void changeProperty(GFile target, String property, String value)
 	{
+		if(!_itemProperties.containsKey(target)) _itemProperties.put(target, new HashMap<String, String>());
 		_itemProperties.get(target).put(property, value);
 	}
 	
@@ -308,12 +364,9 @@ public class FileTree {
 		{
 			for(File f : files)
 			{
-				//tag feature goes here
 				temp = new Item(f.toPath(), f.getName());
 				parent.add(temp);
 			}
 		}
 	}
-	
-	
 }
