@@ -52,7 +52,7 @@ public class FileTree {
 	 */
 
 	
-	public static void delete(GFile file)
+	public void delete(GFile file)
 	{
 		try
 		{
@@ -73,7 +73,7 @@ public class FileTree {
 
 	}
 	
-	public static Tab newTab(String name)
+	public Tab newTab(String name)
 	{
 		try
 		{
@@ -93,7 +93,7 @@ public class FileTree {
 		return null;
 	}
 	
-	public static Project newProject(String name, Tab parent)
+	public Project newProject(String name, Tab parent)
 	{
 		try
 		{
@@ -110,7 +110,7 @@ public class FileTree {
 		return null;
 	}
 	
-	public static Category newCategory(String name, Project parent)
+	public Category newCategory(String name, Project parent)
 	{
 		try
 		{
@@ -127,7 +127,7 @@ public class FileTree {
 		return null;
 	}
 	
-	public static Item newItem(String nameplusext, Path itempath, Category parent) //I'm unsure as to how this is going to be called, 
+	public Item newItem(String nameplusext, Path itempath, Category parent) //I'm unsure as to how this is going to be called, 
 	{
 		try
 		{
@@ -142,11 +142,6 @@ public class FileTree {
 			System.out.println("Problem making new Item: " + e.getMessage());
 		}
 		return null;
-	}
-	
-	public static Folder<Tab> getRoot()
-	{
-		return _root;
 	}
 	
 	public List<Tab> getTabs()
@@ -164,9 +159,15 @@ public class FileTree {
 			{
 				switch (layer)
 				{
-					case 0: temp = new Tab(f.toPath(), f.getName());
-					case 1: temp = new Project(f.toPath(), f.getName());
-					case 2: temp = new Category(f.toPath(), f.getName());
+					case 0: 
+						temp = new Tab(f.toPath(), f.getName());
+						break;
+					case 1:
+						temp = new Project(f.toPath(), f.getName());
+						break;
+					case 2: 
+						temp = new Category(f.toPath(), f.getName());
+						break;
 				}
 				parent.add(temp);
 				buildHelper(temp.getPath(), (Folder) temp,  layer + 1);
