@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.List;
 
+import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -41,5 +42,10 @@ public class GUITabPane extends JPanel
 	{
 		List<Tab> tabs = theFileTree.getTabs();
 		return new JList(tabs.toArray());
+	}
+	
+	private Action buildOpenTabAction(Tab t)
+	{
+		return null;
 	}
 }
