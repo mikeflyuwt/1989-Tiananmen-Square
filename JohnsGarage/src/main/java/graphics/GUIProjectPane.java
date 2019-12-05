@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -98,8 +100,20 @@ public class GUIProjectPane extends JPanel
 	
 	public JList loadProjects()
 	{
-		JList list = new JList(theTab.getContents().toArray());
+		final JList list = new JList(theTab.getContents().toArray());
 		list.setFont(new Font("Tahoma", Font.BOLD, 20));
+		list.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				if (e.getClickCount() == 2 || e.getClickCount() == 3)
+				{
+					Project p = (Project) list.getSelectedValue();
+					GUIProjectView temp = new GUIProjectView(theFileTree, p);
+					temp.setVisible(true);
+				}
+			}
+		});
 		return list;
 	}
 	
