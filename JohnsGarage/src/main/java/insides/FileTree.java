@@ -141,6 +141,32 @@ public class FileTree {
 	}
 	
 	/**
+	 * Imports an Item from the FileSystem using a path, and putting it into the internal representation. 
+	 * It puts the item into the folder represented by the parent, with the name of the name selected plus the extension.
+	 * Last Edited: 12/4/2019
+	 * @author Sam
+	 * @param path
+	 * @param nameplusext
+	 * @param parent
+	 */
+	public void importItem(Path path, String nameplusext, Category parent)
+	{
+		try
+		{
+			Files.copy(path, Paths.get(parent.getPath().toString(), nameplusext));
+		}
+		catch(FileAlreadyExistsException e)
+		{
+			System.out.println("A File already exists in this location with this name. The new file was not copied." + e.getMessage());
+		}
+		catch(IOException e)
+		{
+			System.out.println("Problem in importItem: " + e.getMessage());
+		}
+		
+	}
+	
+	/**
 	 * Recursively exports the contents of a GFile or folder to a specified destination.
 	 * Last Edited: 12/4/2019
 	 * @author Sam
