@@ -13,6 +13,11 @@ import insides.Tab;
 
 public class GUIProjectPaneManager extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8240251102196104852L;
+
 	private FileTree theFileTree;
 	
 	private HashMap<Tab, GUIProjectPane> panes;
