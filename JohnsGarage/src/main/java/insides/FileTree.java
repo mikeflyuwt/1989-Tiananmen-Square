@@ -283,6 +283,7 @@ public class FileTree {
 			Path temppath = Paths.get(parent.getPath().toString() + "\\" + name);
 			Files.createDirectory(temppath);
 			Project ret = new Project(temppath, name);
+			parent.add(ret);
 			return ret;
 			
 		}
