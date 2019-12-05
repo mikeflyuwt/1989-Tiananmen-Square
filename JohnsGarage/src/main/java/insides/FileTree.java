@@ -151,7 +151,8 @@ public class FileTree {
 	 * @param nameplusext
 	 * @param parent
 	 */
-	public void importItem(Path path, String nameplusext, Category parent)
+	// temp change: parent to Project
+	public void importItem(Path path, String nameplusext, Project parent)
 	{
 		try
 		{
@@ -328,13 +329,15 @@ public class FileTree {
 	 * @param parent
 	 * @return the new Item.
 	 */
-	public Item newItem(String nameplusext, Path itempath, Category parent) //I'm unsure as to how this is going to be called, 
+	// temp change: parent to Project
+	public Item newItem(String nameplusext, Path itempath, Folder parent) //I'm unsure as to how this is going to be called, 
 	{
 		try
 		{
 			Path temppath = Paths.get(parent.getPath().toString() + "\\" + nameplusext);
 			Files.copy(itempath, temppath);
 			Item ret = new Item(temppath, nameplusext);
+			parent.add(ret);
 			return ret;
 			
 		}

@@ -19,6 +19,11 @@ import java.util.Properties;
 
 public class GUIAbout extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5979766530012655663L;
+	
 	private final JPanel contentPanel = new JPanel();
 
 	/**
