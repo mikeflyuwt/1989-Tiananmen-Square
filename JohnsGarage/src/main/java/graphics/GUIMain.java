@@ -7,10 +7,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.nio.file.Path;
-
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -83,7 +82,7 @@ public class GUIMain
 		createTabPane();
 		createHomePane();
 		createTabButtons();
-		createImportExport();
+		createExport();
 		
 	}
 	
@@ -97,15 +96,8 @@ public class GUIMain
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				GUIAbout aboutWindow = null;
-				try
-				{
-					aboutWindow = new GUIAbout();
-				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
+				GUIAbout aboutWindow = new GUIAbout();
+				aboutWindow.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				aboutWindow.setVisible(true);
 			}
 		});
@@ -114,7 +106,6 @@ public class GUIMain
 	
 	private void createTabPane()
 	{
-		//GUITabPane tabs = new GUITabPane(theFileTree);
 		setConstraints(0, 0, 2, 1, 0.2, 0.95);
 		mainFrame.add(tabs, constraints);
 		tabs.setVisible(true);
@@ -166,24 +157,11 @@ public class GUIMain
 		mainFrame.add(removeTab, constraints);
 	}
 	
-	private void createImportExport()
+	private void createExport()
 	{
 		JPanel emptyspace = new JPanel();
 		setConstraints(2, 1, 4, 1, 0.7, 0.05);
 		mainFrame.add(emptyspace, constraints);
-//		
-//		JButton importBtn = new JButton("Import");
-//		setConstraints(5, 1, 1, 1, 0.125, 0.05);
-//		importBtn.addActionListener(new ActionListener()
-//		{
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				JFileChooser fileChooser = new JFileChooser();
-//				fileChooser.showOpenDialog(null);
-//				System.out.println("Imported...");
-//			}
-//		});
-//		mainFrame.add(importBtn, constraints);
 		
 		JButton exportBtn = new JButton("Export");
 		setConstraints(6, 1, 1, 1, 0.1, 0.05);
